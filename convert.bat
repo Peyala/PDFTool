@@ -1,0 +1,1 @@
+pyuic5 -x resources/frames/GUI.ui -o src/gui.py
