@@ -35,7 +35,7 @@
    <iconset>
     <normaloff>../img/pdf.png</normaloff>../img/pdf.png</iconset>
   </property>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="pagesLabel">
    <property name="geometry">
     <rect>
      <x>32</x>
@@ -69,11 +69,11 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="textBrowser_2">
+  <widget class="QTextBrowser" name="charTextBrowser">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>128</y>
+     <y>29</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -96,6 +96,12 @@
      <height>23</height>
     </size>
    </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
@@ -110,7 +116,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;4524&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="charLabel">
    <property name="geometry">
     <rect>
      <x>32</x>
@@ -148,7 +154,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>29</y>
+     <y>128</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -171,6 +177,12 @@ p, li { white-space: pre-wrap; }
      <height>23</height>
     </size>
    </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
@@ -185,7 +197,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;4524&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="wordsLabel">
    <property name="geometry">
     <rect>
      <x>32</x>
@@ -219,7 +231,7 @@ p, li { white-space: pre-wrap; }
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="textBrowser_4">
+  <widget class="QTextBrowser" name="wordsTextBrowser">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -246,6 +258,12 @@ p, li { white-space: pre-wrap; }
      <height>23</height>
     </size>
    </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
@@ -260,7 +278,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;4524&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="linesLabel">
    <property name="geometry">
     <rect>
      <x>32</x>
@@ -320,6 +338,12 @@ p, li { white-space: pre-wrap; }
      <width>81</width>
      <height>23</height>
     </size>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
    </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOff</enum>
