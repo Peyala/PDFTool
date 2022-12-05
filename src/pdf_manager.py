@@ -54,7 +54,7 @@ def merge_pdfs(pdfs):
     merger.write(str(time) + "_merged.pdf")
     merger.close()
 
-def split_pdfs(pdf: pdfpl.PDF, pages_range):
+def split_pdfs(pdf: pdfpl.PDF, pages_range: list):
     pdfreader = PdfFileReader(pdf.stream)
     pdfwriter = PdfFileWriter()
     for i in range(pages_range[0],pages_range[1]+1):
