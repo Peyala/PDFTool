@@ -1,1 +1,2 @@
-python src/gui.py
+python script.py
+python src/controller.py

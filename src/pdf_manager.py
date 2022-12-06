@@ -1,11 +1,14 @@
 import pdfplumber as pdfpl
-from PyPDF2 import PdfMerger, PdfFileReader, PdfFileWriter 
+from PyPDF2 import PdfFileMerger, PdfFileReader, PdfFileWriter 
 import datetime as dt
 import zipfile as zip
 import os
 
 def open_pdf(path) -> pdfpl.PDF:
     return pdfpl.open(path)
+
+def close_pdf(pdf):
+    pdf.close()
 
 def export_plain_txt(pdf):
     time = dt.date.today()
@@ -46,12 +49,11 @@ def remove_pages_pdf(pdf, i_pages: list):
     time = dt.date.today()
     pdfwriter.write(str(time)+"_removed.pdf")
 
-def merge_pdfs(pdfs):
-    merger = PdfMerger()
+def merge_pdfs(pdfs, fileName):
+    merger = PdfFileMerger()
     for pdf in pdfs:
-        merger.append(pdf.stream.name)
-    time = dt.date.today()
-    merger.write(str(time) + "_merged.pdf")
+        merger.append(PdfFileReader(pdf.stream))
+    merger.write(fileName)
     merger.close()
 
 def split_pdfs(pdf: pdfpl.PDF, pages_range: list):
