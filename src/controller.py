@@ -59,15 +59,12 @@ def addButtonHandler(ui: gui.Ui_MainWindow):
     for pdf_path in pdf_paths:
         pdfItem = QtWidgets.QTreeWidgetItem(listWidget)
         pdfItem.setIcon(1, icon)
-        #  listWidget.addTopLevelItem(pdfItem)
         pdfItem.setCheckState(2, QtCore.Qt.Unchecked)
-        index = listWidget.indexOfTopLevelItem(pdfItem)
         pdf = open_pdf(pdf_path)
         pdf_list.append(pdf)
         numberItems = len(pdf_list)
         pdfItem.setText(0, _translate("MainWindow", str(numberItems)))
         pdfItem.setText(1, _translate("MainWindow", pdf_path.split('/')[-1]))
-        #print(pdfItem)
     
 def onItemClicked(it, col):
     if it.checkState(2) == 0:
@@ -84,11 +81,11 @@ def onItemClicked(it, col):
     
 def deleteButtonHandler():
     listWidget = ui.pdfTreeWidget
-    #print(selectedItems)
     root = listWidget.invisibleRootItem()
     for item in selectedItems:
-        #close_pdf(pdf_list[index])
-        #del pdf_list[index]
+        index = listWidget.indexOfTopLevelItem(item)
+        close_pdf(pdf_list[index])
+        del pdf_list[index]
         (item.parent() or root).removeChild(item)
         selectedItems.remove(item)
 
@@ -165,7 +162,6 @@ def initGuiHandlers():
     ui.addButton.clicked.connect(lambda: addButtonHandler(ui))
     ui.deleteButton.clicked.connect(deleteButtonHandler)
     ui.countButton.clicked.connect(countButtonHandler)
-    #ui.pdfTreeWidget.itemClicked.connect(lambda: deleteButtonVisibilityHandler(ui.deleteButton))
     ui.mergeButton.clicked.connect(lambda: mergeButtonHandler(ui.pdfTreeWidget.selectedItems()))
     ui.newAction.triggered.connect(lambda: newActionHandler())
     
@@ -181,9 +177,16 @@ def initGui():
     initGuiElements()
     initGuiHandlers()
     pdf_list = []
-    #ui.pdfTreeWidget.itemChanged.connect()
     ui.pdfTreeWidget.itemClicked.connect(onItemClicked)
     selectedItems = []
+    # A incluir en gui pero como se sobreescribe lo dejo aqui por ahora
+    ui.pdfTreeWidget.header().setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+    ui.pdfTreeWidget.header().setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+    ui.pdfTreeWidget.header().setFirstSectionMovable(True)
+    ui.pdfTreeWidget.header().stretchLastSection()
+    ui.pdfTreeWidget.header().resizeSection(1, 170)
+    ui.pdfTreeWidget.header().setMinimumSectionSize(50)
+
     
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
