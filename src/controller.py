@@ -77,17 +77,26 @@ def onItemClicked(it, col):
             selectedItems.append(it)
     print(it.text(1), col, status)
     print(selectedItems)
-    deleteButtonVisibilityHandler(ui.deleteButton)
+    if len(selectedItems) == 0:
+        disableButton(ui.deleteButton)
+    else:
+        enableButton(ui.deleteButton)
     
+#before we had: for item in selectedItems: This is incorrect because we cant remove element while we are iterating. 
+#Because there are elements that we couldn't reach. Instead, create a copy of the list in order to iterate on a copy
+#So we can remove from selectedItems every item 
+#See more: "https://stackoverflow.com/questions/6022764/python-removing-list-element-while-iterating-over-list"
 def deleteButtonHandler():
     listWidget = ui.pdfTreeWidget
     root = listWidget.invisibleRootItem()
-    for item in selectedItems:
+    for item in list(selectedItems):
         index = listWidget.indexOfTopLevelItem(item)
+        print(index)
         close_pdf(pdf_list[index])
         del pdf_list[index]
         (item.parent() or root).removeChild(item)
         selectedItems.remove(item)
+    disableButton(ui.deleteButton)
 
 def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton):
     if len(selectedItems) == 0:
