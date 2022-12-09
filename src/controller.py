@@ -67,18 +67,32 @@ def addButtonHandler(ui: gui.Ui_MainWindow):
         numberItems = len(pdf_list)
         pdfItem.setText(0, _translate("MainWindow", str(numberItems)))
         pdfItem.setText(1, _translate("MainWindow", pdf_path.split('/')[-1]))
-            
+        #print(pdfItem)
+    
+def onItemClicked(it, col):
+    if it.checkState(2) == 0:
+        status = "Desactivado"
+        if it in selectedItems:
+            selectedItems.remove(it)
+    else:
+        status = "Activado"
+        if it not in selectedItems:
+            selectedItems.append(it)
+    print(it.text(1), col, status)
+    print(selectedItems)
+    deleteButtonVisibilityHandler(ui.deleteButton)
+    
 def deleteButtonHandler():
     listWidget = ui.pdfTreeWidget
-    selectedItems = listWidget.selectedItems()
-    print(selectedItems)
+    #print(selectedItems)
     root = listWidget.invisibleRootItem()
     for item in selectedItems:
         #close_pdf(pdf_list[index])
         #del pdf_list[index]
         (item.parent() or root).removeChild(item)
+        selectedItems.remove(item)
 
-def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton, selectedItems: list[QListWidgetItem]):
+def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton):
     if len(selectedItems) == 0:
         disableButton(button)
     else:
@@ -151,12 +165,12 @@ def initGuiHandlers():
     ui.addButton.clicked.connect(lambda: addButtonHandler(ui))
     ui.deleteButton.clicked.connect(deleteButtonHandler)
     ui.countButton.clicked.connect(countButtonHandler)
-    ui.pdfTreeWidget.itemSelectionChanged.connect(lambda: deleteButtonVisibilityHandler(ui.deleteButton, ui.pdfTreeWidget.selectedItems()))
+    #ui.pdfTreeWidget.itemClicked.connect(lambda: deleteButtonVisibilityHandler(ui.deleteButton))
     ui.mergeButton.clicked.connect(lambda: mergeButtonHandler(ui.pdfTreeWidget.selectedItems()))
     ui.newAction.triggered.connect(lambda: newActionHandler())
     
 def initGui():
-    global app, MainWindow, ui, resultCount, uiCount, pdf_list
+    global app, MainWindow, ui, resultCount, uiCount, pdf_list, selectedItems
     MainWindow = QtWidgets.QMainWindow()
     ui = gui.Ui_MainWindow()
     ui.setupUi(MainWindow)
@@ -167,6 +181,9 @@ def initGui():
     initGuiElements()
     initGuiHandlers()
     pdf_list = []
+    #ui.pdfTreeWidget.itemChanged.connect()
+    ui.pdfTreeWidget.itemClicked.connect(onItemClicked)
+    selectedItems = []
     
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
