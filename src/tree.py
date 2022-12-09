@@ -10,6 +10,8 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+
+
 class TreeWidget(QTreeWidget):
     def __init__(self,Form):
         super().__init__(Form)
@@ -24,6 +26,7 @@ class TreeWidget(QTreeWidget):
     def dropEvent(self, event):
         if self.canDrop(event):
             super().dropEvent(event)
+            self.reassignIds()
         else:
             event.ignore()
 
@@ -59,3 +62,10 @@ class TreeWidget(QTreeWidget):
             else:
                 indicator = QAbstractItemView.BelowItem
         return indicator
+    
+    def reassignIds(self):
+        listWidget = self
+        i = 0
+        while i < listWidget.topLevelItemCount():
+            listWidget.topLevelItem(i).setText(0,str(i+1))
+            i+=1
