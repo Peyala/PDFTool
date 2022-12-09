@@ -97,12 +97,20 @@ def deleteButtonHandler():
         (item.parent() or root).removeChild(item)
         selectedItems.remove(item)
     disableButton(ui.deleteButton)
+    reassignIds()
 
 def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton):
     if len(selectedItems) == 0:
         disableButton(button)
     else:
         enableButton(button)
+        
+def reassignIds():
+    listWidget = ui.pdfTreeWidget
+    i = 0
+    while i < listWidget.topLevelItemCount():
+        listWidget.topLevelItem(i).setText(0,str(i+1))
+        i+=1
 
 def countButtonHandler():
     text = ""
