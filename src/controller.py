@@ -54,22 +54,29 @@ def disableButton(button: QtWidgets.QPushButton):
 def addButtonHandler(ui: gui.Ui_MainWindow):
     pdf_paths = QFileDialog.getOpenFileNames(None,'Add your PDF files', './','PDF Files (*pdf)')[0]
     icon = QIcon('resources/img/pdf_icon')
+    listWidget = ui.pdfTreeWidget
+    _translate = QtCore.QCoreApplication.translate
     for pdf_path in pdf_paths:
-        pdfItem = QListWidgetItem(pdf_path.split('/')[-1])
-        pdfItem.setIcon(icon)
-        ui.pdfTreeWidget.addItem(pdfItem)
-        pdfItem.setSelected(True)
+        pdfItem = QtWidgets.QTreeWidgetItem(listWidget)
+        pdfItem.setIcon(1, icon)
+        #  listWidget.addTopLevelItem(pdfItem)
+        pdfItem.setCheckState(2, QtCore.Qt.Unchecked)
+        index = listWidget.indexOfTopLevelItem(pdfItem)
         pdf = open_pdf(pdf_path)
         pdf_list.append(pdf)
-
+        numberItems = len(pdf_list)
+        pdfItem.setText(0, _translate("MainWindow", str(numberItems)))
+        pdfItem.setText(1, _translate("MainWindow", pdf_path.split('/')[-1]))
+            
 def deleteButtonHandler():
     listWidget = ui.pdfTreeWidget
     selectedItems = listWidget.selectedItems()
+    print(selectedItems)
+    root = listWidget.invisibleRootItem()
     for item in selectedItems:
-        index = listWidget.row(item)
-        listWidget.takeItem(index)
-        close_pdf(pdf_list[index])
-        del pdf_list[index]
+        #close_pdf(pdf_list[index])
+        #del pdf_list[index]
+        (item.parent() or root).removeChild(item)
 
 def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton, selectedItems: list[QListWidgetItem]):
     if len(selectedItems) == 0:
