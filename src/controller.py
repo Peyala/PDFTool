@@ -79,13 +79,13 @@ def onItemClicked(it, col):
     print(selectedItems)
     if len(selectedItems) == 0:
         disableComponent(ui.deleteButton)
-        disableCountElements()
+        disableCountElements() #we cant count elements here so we disable count elements
     elif len(selectedItems) == 1:
-        enableCountElements()
         enableComponent(ui.deleteButton)
+        enableCountElements() #we can count elements here so we enable count elements
     else:
-        disableCountElements()
         enableComponent(ui.deleteButton)
+        disableCountElements() #we cant count elements here so we disable count elements
     
 #before we had: for item in selectedItems: This is incorrect because we cant remove element while we are iterating. 
 #Because there are elements that we couldn't reach. Instead, create a copy of the list in order to iterate on a copy
@@ -110,7 +110,8 @@ def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton):
         disableComponent(button)
     else:
         enableComponent(button)
-        
+
+#function that reassigns ID for the TreeWidgetView. This method is also at tree.py in order to reassign IDS when a PDF was dragged and dropped somewhere else
 def reassignIds():
     listWidget = ui.pdfTreeWidget
     i = 0
@@ -120,8 +121,7 @@ def reassignIds():
 
 def countButtonHandler():
     text = ""
-    listWidget = ui.pdfTreeWidget
-    i = int(selectedItems[0].text(0)) - 1
+    i = int(selectedItems[0].text(0)) - 1 #gets the first selected item (only one can be selected here lol)
     pdf = pdf_list[i]
     if ui.charsCheckBox.isChecked():
         chars = str(char_counter(pdf))
@@ -183,6 +183,7 @@ def newActionHandler():
     ui.linesCheckBox.setChecked(False)
     ui.pagesCheckBox.setChecked(False)
 
+#handler that is call when any checkbox is clicked in order to enable or disable the count button
 def checkBoxCountHandler():
     if ui.charsCheckBox.isChecked() or ui.wordsCheckBox.isChecked() or ui.linesCheckBox.isChecked() or ui.pagesCheckBox.isChecked():
         enableComponent(ui.countButton)
@@ -194,7 +195,7 @@ def enableCountElements():
     enableComponent(ui.wordsCheckBox)
     enableComponent(ui.linesCheckBox)
     enableComponent(ui.pagesCheckBox)
-    checkBoxCountHandler()
+    checkBoxCountHandler() #check if we can enable the count button (at least a checkbox is checked)
 
 def disableCountElements():
     disableComponent(ui.countButton)
