@@ -45,11 +45,11 @@ def extract_pdfs(pdf: pdfpl.PDF, i_pages: list):
     return model.extract_pdfs(pdf,i_pages)
 
 # Controllers
-def enableButton(button: QtWidgets.QPushButton):
-    button.setEnabled(True)
+def enableComponent(component):
+    component.setEnabled(True)
 
-def disableButton(button: QtWidgets.QPushButton):
-    button.setDisabled(True)
+def disableComponent(component):
+    component.setDisabled(True)
 
 def addButtonHandler(ui: gui.Ui_MainWindow):
     pdf_paths = QFileDialog.getOpenFileNames(None,'Add your PDF files', './','PDF Files (*pdf)')[0]
@@ -78,9 +78,14 @@ def onItemClicked(it, col):
     print(it.text(1), col, status)
     print(selectedItems)
     if len(selectedItems) == 0:
-        disableButton(ui.deleteButton)
+        disableComponent(ui.deleteButton)
+        disableCountElements()
+    elif len(selectedItems) == 1:
+        enableCountElements()
+        enableComponent(ui.deleteButton)
     else:
-        enableButton(ui.deleteButton)
+        disableCountElements()
+        enableComponent(ui.deleteButton)
     
 #before we had: for item in selectedItems: This is incorrect because we cant remove element while we are iterating. 
 #Because there are elements that we couldn't reach. Instead, create a copy of the list in order to iterate on a copy
@@ -96,14 +101,15 @@ def deleteButtonHandler():
         del pdf_list[index]
         (item.parent() or root).removeChild(item)
         selectedItems.remove(item)
-    disableButton(ui.deleteButton)
+    disableComponent(ui.deleteButton)
+    disableCountElements()
     reassignIds()
 
 def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton):
     if len(selectedItems) == 0:
-        disableButton(button)
+        disableComponent(button)
     else:
-        enableButton(button)
+        enableComponent(button)
         
 def reassignIds():
     listWidget = ui.pdfTreeWidget
@@ -115,18 +121,40 @@ def reassignIds():
 def countButtonHandler():
     text = ""
     listWidget = ui.pdfTreeWidget
-    item = listWidget.selectedItems()[0]
-    index = listWidget.row(item)
-    pdf = pdf_list[index]
+    i = int(selectedItems[0].text(0)) - 1
+    pdf = pdf_list[i]
     if ui.charsCheckBox.isChecked():
-        text = text + "Chars: " + str(char_counter(pdf)) + "\n"
+        chars = str(char_counter(pdf))
+        text = text + "Chars: " + chars + "\n"
+        uiCount.charTextBrowser.setText(chars)
+        enableComponent(uiCount.charTextBrowser)
+    else:
+        disableComponent(uiCount.charTextBrowser)
+        uiCount.charTextBrowser.setText("")
     if ui.wordsCheckBox.isChecked():
-        text = text + "Words: " + str(word_counter(pdf)) + "\n"
+        words = str(word_counter(pdf))
+        text = text + "Words: " + words + "\n"
+        uiCount.wordsTextBrowser.setText(words)
+        enableComponent(uiCount.wordsTextBrowser)
+    else:
+        disableComponent(uiCount.wordsTextBrowser)
+        uiCount.wordsTextBrowser.setText("")
     if ui.linesCheckBox.isChecked():
-        text = text + "Lines: " + str(line_counter(pdf)) + "\n"
+        lines = str(line_counter(pdf))
+        text = text + "Lines: " + lines + "\n"
+        uiCount.linesTextBrowser.setText(lines)
+        enableComponent(uiCount.linesTextBrowser)
+    else:
+        disableComponent(uiCount.linesTextBrowser)
+        uiCount.linesTextBrowser.setText("")
     if ui.pagesCheckBox.isChecked():
-        text = text + "Pages: " + str(page_counter(pdf)) + "\n"
-    print(text)
+        pages = str(page_counter(pdf))
+        text = text + "Pages: " + pages  + "\n"
+        uiCount.pagesTextBrowser.setText(pages)
+        enableComponent(uiCount.pagesTextBrowser)
+    else:
+        disableComponent(uiCount.pagesTextBrowser)
+        uiCount.pagesTextBrowser.setText("")
     resultCount.show()
 
 def mergeButtonHandler(widgetItems):
@@ -148,20 +176,40 @@ def newActionHandler():
     for pdf in pdf_list:
         close_pdf(pdf)
     #manage buttons
-    disableButton(ui.deleteButton)
+    disableComponent(ui.deleteButton)
     #clear inputs
     ui.charsCheckBox.setChecked(False)
     ui.wordsCheckBox.setChecked(False)
     ui.linesCheckBox.setChecked(False)
     ui.pagesCheckBox.setChecked(False)
+
+def checkBoxCountHandler():
+    if ui.charsCheckBox.isChecked() or ui.wordsCheckBox.isChecked() or ui.linesCheckBox.isChecked() or ui.pagesCheckBox.isChecked():
+        enableComponent(ui.countButton)
+    else:
+        disableComponent(ui.countButton)
+
+def enableCountElements():
+    enableComponent(ui.charsCheckBox)
+    enableComponent(ui.wordsCheckBox)
+    enableComponent(ui.linesCheckBox)
+    enableComponent(ui.pagesCheckBox)
+    checkBoxCountHandler()
+
+def disableCountElements():
+    disableComponent(ui.countButton)
+    disableComponent(ui.charsCheckBox)
+    disableComponent(ui.wordsCheckBox)
+    disableComponent(ui.linesCheckBox)
+    disableComponent(ui.pagesCheckBox)
     
 def initGuiElements():
-    disableButton(ui.deleteButton)
-    disableButton(ui.countButton)
-    disableButton(ui.removeButton)
-    disableButton(ui.extractButton)
-    disableButton(ui.mergeButton)
-    disableButton(ui.splitButton)
+    disableComponent(ui.deleteButton)
+    disableComponent(ui.countButton)
+    disableComponent(ui.removeButton)
+    disableComponent(ui.extractButton)
+    disableComponent(ui.mergeButton)
+    disableComponent(ui.splitButton)
     ui.charsCheckBox.setChecked(False)
     ui.wordsCheckBox.setChecked(False)
     ui.linesCheckBox.setChecked(False)
@@ -181,6 +229,10 @@ def initGuiHandlers():
     ui.countButton.clicked.connect(countButtonHandler)
     ui.mergeButton.clicked.connect(lambda: mergeButtonHandler(ui.pdfTreeWidget.selectedItems()))
     ui.newAction.triggered.connect(lambda: newActionHandler())
+    ui.charsCheckBox.clicked.connect(lambda: checkBoxCountHandler())
+    ui.wordsCheckBox.clicked.connect(lambda: checkBoxCountHandler())
+    ui.linesCheckBox.clicked.connect(lambda: checkBoxCountHandler())
+    ui.pagesCheckBox.clicked.connect(lambda: checkBoxCountHandler())
     
 def initGui():
     global app, MainWindow, ui, resultCount, uiCount, pdf_list, selectedItems

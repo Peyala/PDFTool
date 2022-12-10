@@ -61,20 +61,20 @@ class Ui_resultCount(object):
         self.charLabel.setMaximumSize(QtCore.QSize(75, 23))
         self.charLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.charLabel.setObjectName("charLabel")
-        self.textBrowser_3 = QtWidgets.QTextBrowser(resultCount)
-        self.textBrowser_3.setGeometry(QtCore.QRect(130, 128, 81, 23))
+        self.pagesTextBrowser = QtWidgets.QTextBrowser(resultCount)
+        self.pagesTextBrowser.setGeometry(QtCore.QRect(130, 128, 81, 23))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textBrowser_3.sizePolicy().hasHeightForWidth())
-        self.textBrowser_3.setSizePolicy(sizePolicy)
-        self.textBrowser_3.setMinimumSize(QtCore.QSize(81, 23))
-        self.textBrowser_3.setMaximumSize(QtCore.QSize(81, 23))
-        self.textBrowser_3.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.textBrowser_3.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.textBrowser_3.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textBrowser_3.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textBrowser_3.setObjectName("textBrowser_3")
+        sizePolicy.setHeightForWidth(self.pagesTextBrowser.sizePolicy().hasHeightForWidth())
+        self.pagesTextBrowser.setSizePolicy(sizePolicy)
+        self.pagesTextBrowser.setMinimumSize(QtCore.QSize(81, 23))
+        self.pagesTextBrowser.setMaximumSize(QtCore.QSize(81, 23))
+        self.pagesTextBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.pagesTextBrowser.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.pagesTextBrowser.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.pagesTextBrowser.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.pagesTextBrowser.setObjectName("pagesTextBrowser")
         self.wordsLabel = QtWidgets.QLabel(resultCount)
         self.wordsLabel.setGeometry(QtCore.QRect(32, 62, 75, 23))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -111,20 +111,20 @@ class Ui_resultCount(object):
         self.linesLabel.setMaximumSize(QtCore.QSize(75, 23))
         self.linesLabel.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.linesLabel.setObjectName("linesLabel")
-        self.textBrowser_5 = QtWidgets.QTextBrowser(resultCount)
-        self.textBrowser_5.setGeometry(QtCore.QRect(130, 95, 81, 23))
+        self.linesTextBrowser = QtWidgets.QTextBrowser(resultCount)
+        self.linesTextBrowser.setGeometry(QtCore.QRect(130, 95, 81, 23))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textBrowser_5.sizePolicy().hasHeightForWidth())
-        self.textBrowser_5.setSizePolicy(sizePolicy)
-        self.textBrowser_5.setMinimumSize(QtCore.QSize(81, 23))
-        self.textBrowser_5.setMaximumSize(QtCore.QSize(81, 23))
-        self.textBrowser_5.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.textBrowser_5.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.textBrowser_5.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textBrowser_5.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textBrowser_5.setObjectName("textBrowser_5")
+        sizePolicy.setHeightForWidth(self.linesTextBrowser.sizePolicy().hasHeightForWidth())
+        self.linesTextBrowser.setSizePolicy(sizePolicy)
+        self.linesTextBrowser.setMinimumSize(QtCore.QSize(81, 23))
+        self.linesTextBrowser.setMaximumSize(QtCore.QSize(81, 23))
+        self.linesTextBrowser.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.linesTextBrowser.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.linesTextBrowser.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.linesTextBrowser.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.linesTextBrowser.setObjectName("linesTextBrowser")
         self.pushButton = QtWidgets.QPushButton(resultCount)
         self.pushButton.setGeometry(QtCore.QRect(30, 170, 81, 23))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -158,25 +158,25 @@ class Ui_resultCount(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4524</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.charLabel.setText(_translate("resultCount", "Characters"))
-        self.textBrowser_3.setHtml(_translate("resultCount", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.pagesTextBrowser.setHtml(_translate("resultCount", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4524</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.wordsLabel.setText(_translate("resultCount", "Words"))
         self.wordsTextBrowser.setHtml(_translate("resultCount", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4524</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.linesLabel.setText(_translate("resultCount", "Lines"))
-        self.textBrowser_5.setHtml(_translate("resultCount", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.linesTextBrowser.setHtml(_translate("resultCount", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">4524</p></body></html>"))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.pushButton.setText(_translate("resultCount", "Export"))
         self.pushButton_2.setText(_translate("resultCount", "OK"))
 
