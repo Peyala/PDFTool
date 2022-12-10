@@ -4,6 +4,7 @@ import gui as gui
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QListWidgetItem, QDialog, QMessageBox
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 import datetime as dt
 import sys
 import count_gui as count_gui
@@ -120,6 +121,8 @@ def reassignIds():
         i+=1
 
 def countButtonHandler():
+    #change cursor to waiting cursor while computing 
+    app.setOverrideCursor(Qt.WaitCursor)
     text = ""
     i = int(selectedItems[0].text(0)) - 1 #gets the first selected item (only one can be selected here lol)
     pdf = pdf_list[i]
@@ -155,6 +158,8 @@ def countButtonHandler():
     else:
         disableComponent(uiCount.pagesTextBrowser)
         uiCount.pagesTextBrowser.setText("")
+    #resrote the original cursor
+    app.restoreOverrideCursor()
     resultCount.show()
 
 def mergeButtonHandler(widgetItems):
