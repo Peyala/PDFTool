@@ -210,7 +210,6 @@ def disableCountElements():
     
 def initGuiElements():
     disableComponent(ui.deleteButton)
-    disableComponent(ui.countButton)
     disableComponent(ui.removeButton)
     disableComponent(ui.extractButton)
     disableComponent(ui.mergeButton)
@@ -219,10 +218,7 @@ def initGuiElements():
     ui.wordsCheckBox.setChecked(False)
     ui.linesCheckBox.setChecked(False)
     ui.pagesCheckBox.setChecked(False)
-    ui.charsCheckBox.setEnabled(False)
-    ui.wordsCheckBox.setEnabled(False)
-    ui.linesCheckBox.setEnabled(False)
-    ui.pagesCheckBox.setEnabled(False)
+    disableCountElements()
     ui.remLineEdit.setEnabled(False)
     ui.extrLineEdit.setEnabled(False)
     ui.bottomSplitSpinBox.setEnabled(False)
@@ -239,6 +235,8 @@ def initGuiHandlers():
     ui.wordsCheckBox.clicked.connect(checkBoxCountHandler)
     ui.linesCheckBox.clicked.connect(checkBoxCountHandler)
     ui.pagesCheckBox.clicked.connect(checkBoxCountHandler)
+    # Menu bar
+    #ui.actionSelect_all.clicked.connect()
     # countGUI
     uiCount.okButton.clicked.connect(resultCount.close)
     uiCount.exportButton.clicked.connect(exportButtonHandler)
