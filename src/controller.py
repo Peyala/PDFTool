@@ -51,7 +51,7 @@ def enableComponent(component):
 def disableComponent(component):
     component.setDisabled(True)
 
-def addButtonHandler(ui: gui.Ui_MainWindow):
+def addButtonHandler():
     pdf_paths = QFileDialog.getOpenFileNames(None,'Add your PDF files', './','PDF Files (*pdf)')[0]
     icon = QIcon('resources/img/pdf_icon')
     listWidget = ui.pdfTreeWidget
@@ -226,7 +226,7 @@ def initGuiElements():
     
 def initGuiHandlers():
     # anotherGUI
-    ui.addButton.clicked.connect(lambda: addButtonHandler(ui))
+    ui.addButton.clicked.connect(addButtonHandler)
     ui.deleteButton.clicked.connect(deleteButtonHandler)
     ui.countButton.clicked.connect(countButtonHandler)
     ui.mergeButton.clicked.connect(lambda: mergeButtonHandler(ui.pdfTreeWidget.selectedItems()))
