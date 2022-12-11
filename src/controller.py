@@ -284,6 +284,7 @@ def initGuiHandlers():
     ui.linesCheckBox.clicked.connect(checkBoxCountHandler)
     ui.pagesCheckBox.clicked.connect(checkBoxCountHandler)
     # Menu bar
+    ui.exitAction.triggered.connect(MainWindow.close)
     ui.actionSelect_all.triggered.connect(selectAllPdfs)
     ui.actionUnselect_all.triggered.connect(unselectAllPdfs)
     # countGUI
