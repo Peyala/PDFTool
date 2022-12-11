@@ -65,6 +65,7 @@ def addButtonHandler():
         numberItems = len(pdf_list)
         pdfItem.setText(0, _translate("MainWindow", str(numberItems)))
         pdfItem.setText(1, _translate("MainWindow", pdf_path.split('/')[-1]))
+        items_list.append(pdfItem)
     
 def onItemClicked(it, col):
     if it.checkState(2) == 0:
@@ -101,6 +102,7 @@ def deleteButtonHandler():
         del pdf_list[index]
         (item.parent() or root).removeChild(item)
         selectedItems.remove(item)
+        items_list.remove(item)
     disableComponent(ui.deleteButton)
     disableCountElements()
     reassignIds()
@@ -182,10 +184,11 @@ def newActionHandler():
     #manage buttons
     disableComponent(ui.deleteButton)
     #clear inputs
-    ui.charsCheckBox.setChecked(False)
+    setCountCheckState(False)
+    """ui.charsCheckBox.setChecked(False)
     ui.wordsCheckBox.setChecked(False)
     ui.linesCheckBox.setChecked(False)
-    ui.pagesCheckBox.setChecked(False)
+    ui.pagesCheckBox.setChecked(False)"""
 
 #handler that is call when any checkbox is clicked in order to enable or disable the count button
 def checkBoxCountHandler():
@@ -208,17 +211,39 @@ def disableCountElements():
     disableComponent(ui.linesCheckBox)
     disableComponent(ui.pagesCheckBox)
     
+def setCountCheckState(state: bool):
+    ui.charsCheckBox.setChecked(state)
+    ui.wordsCheckBox.setChecked(state)
+    ui.linesCheckBox.setChecked(state)
+    ui.pagesCheckBox.setChecked(state)
+
+def selectAllPdfs():
+    global selectedItems
+    for item in items_list:
+        item.setCheckState(2, QtCore.Qt.Checked)
+    selectedItems = items_list.copy()
+    if len(selectedItems) == 0:
+        disableComponent(ui.deleteButton)
+        disableCountElements() #we cant count elements here so we disable count elements
+    elif len(selectedItems) == 1:
+        enableComponent(ui.deleteButton)
+        enableCountElements() #we can count elements here so we enable count elements
+    else:
+        enableComponent(ui.deleteButton)
+        disableCountElements() #we cant count elements here so we disable count elements
+
 def initGuiElements():
     disableComponent(ui.deleteButton)
     disableComponent(ui.removeButton)
     disableComponent(ui.extractButton)
     disableComponent(ui.mergeButton)
     disableComponent(ui.splitButton)
-    ui.charsCheckBox.setChecked(False)
+    disableCountElements()
+    setCountCheckState(False)
+    """ui.charsCheckBox.setChecked(False)
     ui.wordsCheckBox.setChecked(False)
     ui.linesCheckBox.setChecked(False)
-    ui.pagesCheckBox.setChecked(False)
-    disableCountElements()
+    ui.pagesCheckBox.setChecked(False)"""
     ui.remLineEdit.setEnabled(False)
     ui.extrLineEdit.setEnabled(False)
     ui.bottomSplitSpinBox.setEnabled(False)
@@ -236,13 +261,13 @@ def initGuiHandlers():
     ui.linesCheckBox.clicked.connect(checkBoxCountHandler)
     ui.pagesCheckBox.clicked.connect(checkBoxCountHandler)
     # Menu bar
-    #ui.actionSelect_all.clicked.connect()
+    ui.actionSelect_all.triggered.connect(selectAllPdfs)
     # countGUI
     uiCount.okButton.clicked.connect(resultCount.close)
     uiCount.exportButton.clicked.connect(exportButtonHandler)
     
 def initGui():
-    global app, MainWindow, ui, resultCount, uiCount, pdf_list, selectedItems
+    global app, MainWindow, ui, resultCount, uiCount, pdf_list, items_list, selectedItems
     MainWindow = QtWidgets.QMainWindow()
     ui = gui.Ui_MainWindow()
     ui.setupUi(MainWindow)
@@ -253,6 +278,7 @@ def initGui():
     initGuiElements()
     initGuiHandlers()
     pdf_list = []
+    items_list = []
     ui.pdfTreeWidget.itemClicked.connect(onItemClicked)
     selectedItems = []
     # A incluir en gui pero como se sobreescribe lo dejo aqui por ahora
