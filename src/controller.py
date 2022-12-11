@@ -66,6 +66,8 @@ def addButtonHandler():
         pdfItem.setText(0, _translate("MainWindow", str(numberItems)))
         pdfItem.setText(1, _translate("MainWindow", pdf_path.split('/')[-1]))
         items_list.append(pdfItem)
+    if len(items_list) > 0 :
+        enableComponent(ui.actionSelect_all)
     
 def onItemClicked(it, col):
     if it.checkState(2) == 0:
@@ -81,12 +83,22 @@ def onItemClicked(it, col):
     if len(selectedItems) == 0:
         disableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
+        disableComponent(ui.actionUnselect_all)
     elif len(selectedItems) == 1:
         enableComponent(ui.deleteButton)
         enableCountElements() #we can count elements here so we enable count elements
+        enableComponent(ui.actionUnselect_all)
     else:
         enableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
+        enableComponent(ui.actionUnselect_all)
+    # Comparison to manage menu bar options enabling
+    selectedItems.sort()
+    items_list.sort()
+    if selectedItems == items_list:
+        disableComponent(ui.actionSelect_all)
+    else:
+        enableComponent(ui.actionSelect_all)
     
 #before we had: for item in selectedItems: This is incorrect because we cant remove element while we are iterating. 
 #Because there are elements that we couldn't reach. Instead, create a copy of the list in order to iterate on a copy
@@ -227,6 +239,8 @@ def selectAllPdfs():
     else:
         disableCountElements() #we cant count elements here so we disable count elements
     enableComponent(ui.deleteButton)
+    disableComponent(ui.actionSelect_all)
+    enableComponent(ui.actionUnselect_all)
 
 def unselectAllPdfs():
     global selectedItems
@@ -235,6 +249,8 @@ def unselectAllPdfs():
     selectedItems.clear()
     disableComponent(ui.deleteButton)
     disableCountElements() #we cant count elements here so we disable count elements
+    disableComponent(ui.actionUnselect_all)
+    enableComponent(ui.actionSelect_all)
 
 def initGuiElements():
     disableComponent(ui.deleteButton)
@@ -242,6 +258,9 @@ def initGuiElements():
     disableComponent(ui.extractButton)
     disableComponent(ui.mergeButton)
     disableComponent(ui.splitButton)
+    disableComponent(ui.actionSelect_all)
+    disableComponent(ui.actionUnselect_all)
+    disableComponent(ui.actionUndo)
     disableCountElements()
     setCountCheckState(False)
     """ui.charsCheckBox.setChecked(False)
