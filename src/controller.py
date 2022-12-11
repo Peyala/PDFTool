@@ -10,7 +10,6 @@ import sys
 import count_gui as count_gui
 import tree as tree
 
-
 # Operations 
 def open_pdf(path: str):
     return model.open_pdf(path)
@@ -45,7 +44,7 @@ def remove_pages_pdf(pdf: pdfpl.PDF, i_pages: list):
 def extract_pdfs(pdf: pdfpl.PDF, i_pages: list):
     return model.extract_pdfs(pdf,i_pages)
 
-# Controllers
+# GUI Controllers 
 def enableComponent(component):
     component.setEnabled(True)
 
@@ -230,15 +229,19 @@ def initGuiElements():
     ui.topSplitSpinBox.setEnabled(False)
     
 def initGuiHandlers():
+    # anotherGUI
     ui.addButton.clicked.connect(lambda: addButtonHandler(ui))
     ui.deleteButton.clicked.connect(deleteButtonHandler)
     ui.countButton.clicked.connect(countButtonHandler)
     ui.mergeButton.clicked.connect(lambda: mergeButtonHandler(ui.pdfTreeWidget.selectedItems()))
-    ui.newAction.triggered.connect(lambda: newActionHandler())
-    ui.charsCheckBox.clicked.connect(lambda: checkBoxCountHandler())
-    ui.wordsCheckBox.clicked.connect(lambda: checkBoxCountHandler())
-    ui.linesCheckBox.clicked.connect(lambda: checkBoxCountHandler())
-    ui.pagesCheckBox.clicked.connect(lambda: checkBoxCountHandler())
+    ui.newAction.triggered.connect(newActionHandler)
+    ui.charsCheckBox.clicked.connect(checkBoxCountHandler)
+    ui.wordsCheckBox.clicked.connect(checkBoxCountHandler)
+    ui.linesCheckBox.clicked.connect(checkBoxCountHandler)
+    ui.pagesCheckBox.clicked.connect(checkBoxCountHandler)
+    # countGUI
+    uiCount.okButton.clicked.connect(resultCount.close)
+    uiCount.exportButton.clicked.connect(exportButtonHandler)
     
 def initGui():
     global app, MainWindow, ui, resultCount, uiCount, pdf_list, selectedItems
@@ -262,7 +265,12 @@ def initGui():
     ui.pdfTreeWidget.header().resizeSection(1, 170)
     ui.pdfTreeWidget.header().setMinimumSectionSize(50)
 
-    
+# Count_GUI Controllers 
+
+def exportButtonHandler():
+    x=0
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     initGui()
