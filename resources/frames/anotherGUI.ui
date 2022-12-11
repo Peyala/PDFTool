@@ -414,63 +414,6 @@
       <string>Selected</string>
      </property>
     </column>
-    <item>
-     <property name="text">
-      <string>1</string>
-     </property>
-     <property name="text">
-      <string>21.pdf</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../img/pdf_icon.png</normaloff>../img/pdf_icon.png</iconset>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-     <property name="checkState">
-      <enum>Checked</enum>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>2</string>
-     </property>
-     <property name="text">
-      <string>plan.pdf</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../img/pdf_icon.png</normaloff>../img/pdf_icon.png</iconset>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="checkState">
-      <enum>Unchecked</enum>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>3</string>
-     </property>
-     <property name="text">
-      <string>soda.pdf</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../img/pdf_icon.png</normaloff>../img/pdf_icon.png</iconset>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="checkState">
-      <enum>Unchecked</enum>
-     </property>
-    </item>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
