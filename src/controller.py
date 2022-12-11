@@ -291,7 +291,7 @@ def initGui():
     ui.pdfTreeWidget.header().setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
     ui.pdfTreeWidget.header().setFirstSectionMovable(True)
     ui.pdfTreeWidget.header().stretchLastSection()
-    ui.pdfTreeWidget.header().resizeSection(1, 170)
+    ui.pdfTreeWidget.header().resizeSection(1, 160)
     ui.pdfTreeWidget.header().setMinimumSectionSize(50)
 
 # Count_GUI Controllers 
