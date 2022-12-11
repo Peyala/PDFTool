@@ -439,7 +439,9 @@
      <string>Edit</string>
     </property>
     <addaction name="actionUndo"/>
+    <addaction name="separator"/>
     <addaction name="actionSelect_all"/>
+    <addaction name="actionUnselect_all"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -492,13 +494,51 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/undo.png</normaloff>../img/undo.png</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionSelect_all">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/selectall.png</normaloff>../img/selectall.png</iconset>
+   </property>
    <property name="text">
     <string>Select all</string>
+   </property>
+   <property name="toolTip">
+    <string>Select all PDFs</string>
+   </property>
+   <property name="whatsThis">
+    <string>PDFs</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionUnselect_all">
+   <property name="icon">
+    <iconset>
+     <normaloff>../img/unselectall2.png</normaloff>../img/unselectall2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unselect all </string>
+   </property>
+   <property name="toolTip">
+    <string>Unselect all PDFs</string>
+   </property>
+   <property name="whatsThis">
+    <string>PDFs</string>
    </property>
   </action>
  </widget>
