@@ -501,6 +501,12 @@
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="statusTip">
+    <string>Undo the last action</string>
+   </property>
+   <property name="whatsThis">
+    <string>Undo the last action</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
    </property>
@@ -514,10 +520,13 @@
     <string>Select all</string>
    </property>
    <property name="toolTip">
+    <string>Select all</string>
+   </property>
+   <property name="statusTip">
     <string>Select all PDFs</string>
    </property>
    <property name="whatsThis">
-    <string>PDFs</string>
+    <string>Select all PDFs</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
@@ -535,10 +544,13 @@
     <string>Unselect all </string>
    </property>
    <property name="toolTip">
+    <string>Unselect all</string>
+   </property>
+   <property name="statusTip">
     <string>Unselect all PDFs</string>
    </property>
    <property name="whatsThis">
-    <string>PDFs</string>
+    <string>Unselect all PDFs</string>
    </property>
   </action>
  </widget>

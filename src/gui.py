@@ -253,14 +253,18 @@ class Ui_MainWindow(object):
         self.actionAbout_PDFTool.setText(_translate("MainWindow", "About PDFTool"))
         self.actionSee_help.setText(_translate("MainWindow", "See the Help"))
         self.actionUndo.setText(_translate("MainWindow", "Undo"))
+        self.actionUndo.setStatusTip(_translate("MainWindow", "Undo the last action"))
+        self.actionUndo.setWhatsThis(_translate("MainWindow", "Undo the last action"))
         self.actionUndo.setShortcut(_translate("MainWindow", "Ctrl+Z"))
         self.actionSelect_all.setText(_translate("MainWindow", "Select all"))
-        self.actionSelect_all.setToolTip(_translate("MainWindow", "Select all PDFs"))
-        self.actionSelect_all.setWhatsThis(_translate("MainWindow", "PDFs"))
+        self.actionSelect_all.setToolTip(_translate("MainWindow", "Select all"))
+        self.actionSelect_all.setStatusTip(_translate("MainWindow", "Select all PDFs"))
+        self.actionSelect_all.setWhatsThis(_translate("MainWindow", "Select all PDFs"))
         self.actionSelect_all.setShortcut(_translate("MainWindow", "Ctrl+A"))
         self.actionUnselect_all.setText(_translate("MainWindow", "Unselect all "))
-        self.actionUnselect_all.setToolTip(_translate("MainWindow", "Unselect all PDFs"))
-        self.actionUnselect_all.setWhatsThis(_translate("MainWindow", "PDFs"))
+        self.actionUnselect_all.setToolTip(_translate("MainWindow", "Unselect all"))
+        self.actionUnselect_all.setStatusTip(_translate("MainWindow", "Unselect all PDFs"))
+        self.actionUnselect_all.setWhatsThis(_translate("MainWindow", "Unselect all PDFs"))
 
 
 if __name__ == "__main__":
