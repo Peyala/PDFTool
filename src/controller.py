@@ -222,15 +222,19 @@ def selectAllPdfs():
     for item in items_list:
         item.setCheckState(2, QtCore.Qt.Checked)
     selectedItems = items_list.copy()
-    if len(selectedItems) == 0:
-        disableComponent(ui.deleteButton)
-        disableCountElements() #we cant count elements here so we disable count elements
-    elif len(selectedItems) == 1:
-        enableComponent(ui.deleteButton)
+    if len(selectedItems) == 1:
         enableCountElements() #we can count elements here so we enable count elements
     else:
-        enableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
+    enableComponent(ui.deleteButton)
+
+def unselectAllPdfs():
+    global selectedItems
+    for item in selectedItems:
+        item.setCheckState(2, QtCore.Qt.Unchecked)
+    selectedItems.clear()
+    disableComponent(ui.deleteButton)
+    disableCountElements() #we cant count elements here so we disable count elements
 
 def initGuiElements():
     disableComponent(ui.deleteButton)
@@ -262,6 +266,7 @@ def initGuiHandlers():
     ui.pagesCheckBox.clicked.connect(checkBoxCountHandler)
     # Menu bar
     ui.actionSelect_all.triggered.connect(selectAllPdfs)
+    ui.actionUnselect_all.triggered.connect(unselectAllPdfs)
     # countGUI
     uiCount.okButton.clicked.connect(resultCount.close)
     uiCount.exportButton.clicked.connect(exportButtonHandler)
