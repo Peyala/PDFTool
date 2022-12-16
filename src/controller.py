@@ -84,14 +84,17 @@ def onItemClicked(it, col):
         disableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
         disableComponent(ui.actionUnselect_all)
+        disableComponent(ui.mergeButton)
     elif len(selectedItems) == 1:
         enableComponent(ui.deleteButton)
         enableCountElements() #we can count elements here so we enable count elements
         enableComponent(ui.actionUnselect_all)
+        disableComponent(ui.mergeButton)
     else:
         enableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
         enableComponent(ui.actionUnselect_all)
+        enableComponent(ui.mergeButton)
     # Comparison to manage menu bar options enabling
     selectedItems.sort()
     items_list.sort()
@@ -117,6 +120,8 @@ def deleteButtonHandler():
         items_list.remove(item)
     disableComponent(ui.deleteButton)
     disableCountElements()
+    disableComponent(ui.actionUnselect_all)
+    disableComponent(ui.mergeButton)
     reassignIds()
 
 def deleteButtonVisibilityHandler(button: QtWidgets.QPushButton):
@@ -174,17 +179,25 @@ def countButtonHandler():
     #resrote the original cursor
     app.restoreOverrideCursor()
     resultCount.show()
+    
+def parseInterval():
+    interval_input = ui.pagesRemLabel.text()
+    sections = interval_input.split(',')
+    for sec in sections:
+        sub_section = sec.split('-')
 
-def mergeButtonHandler(widgetItems):
+def mergeButtonHandler():
     elgible_pdfs = []
     listWidget = ui.pdfTreeWidget
-    for item in widgetItems:
-        i = listWidget.row(item) 
-        elgible_pdfs.append(pdf_list[i])
+    i = 0
+    for i in range(len(selectedItems)):
+        index = int(listWidget.topLevelItem(i).text(0)) - 1
+        elgible_pdfs.append(pdf_list[index])
     time = dt.date.today()
     file_name = QFileDialog.getSaveFileName(None,'Save merged PDF file', str(time) + '_merged.pdf','PDF Files (*pdf)')[0]
     if file_name.split('.')[-1] != 'pdf':
         file_name = file_name + '.pdf'
+    print(elgible_pdfs)
     merge_pdfs(elgible_pdfs,file_name)
     
 def newActionHandler():
@@ -193,6 +206,9 @@ def newActionHandler():
     #close pdfs
     for pdf in pdf_list:
         close_pdf(pdf)
+    pdf_list.clear()
+    items_list.clear()
+    selectedItems.clear()
     #manage buttons
     disableComponent(ui.deleteButton)
     #clear inputs
@@ -235,8 +251,10 @@ def selectAllPdfs():
         item.setCheckState(2, QtCore.Qt.Checked)
     selectedItems = items_list.copy()
     if len(selectedItems) == 1:
+        disableComponent(ui.mergeButton)
         enableCountElements() #we can count elements here so we enable count elements
     else:
+        enableComponent(ui.mergeButton)
         disableCountElements() #we cant count elements here so we disable count elements
     enableComponent(ui.deleteButton)
     disableComponent(ui.actionSelect_all)
@@ -251,6 +269,7 @@ def unselectAllPdfs():
     disableCountElements() #we cant count elements here so we disable count elements
     disableComponent(ui.actionUnselect_all)
     enableComponent(ui.actionSelect_all)
+    disableComponent(ui.mergeButton)
 
 def initGuiElements():
     disableComponent(ui.deleteButton)
@@ -277,7 +296,7 @@ def initGuiHandlers():
     ui.addButton.clicked.connect(addButtonHandler)
     ui.deleteButton.clicked.connect(deleteButtonHandler)
     ui.countButton.clicked.connect(countButtonHandler)
-    ui.mergeButton.clicked.connect(lambda: mergeButtonHandler(ui.pdfTreeWidget.selectedItems()))
+    ui.mergeButton.clicked.connect(mergeButtonHandler)
     ui.newAction.triggered.connect(newActionHandler)
     ui.charsCheckBox.clicked.connect(checkBoxCountHandler)
     ui.wordsCheckBox.clicked.connect(checkBoxCountHandler)
