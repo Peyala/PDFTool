@@ -187,18 +187,31 @@ def parseInterval():
         sub_section = sec.split('-')
 
 def mergeButtonHandler():
+    global pdf_list
     elgible_pdfs = []
     listWidget = ui.pdfTreeWidget
+    sorted_pdf_list = []
     i = 0
     for i in range(len(selectedItems)):
-        index = int(listWidget.topLevelItem(i).text(0)) - 1
-        elgible_pdfs.append(pdf_list[index])
+        pdfName = listWidget.topLevelItem(i).text(1)
+        pdf = searchPDFByName(pdfName)
+        sorted_pdf_list.append(pdf)
+        if listWidget.topLevelItem(i).checkState(2):
+            elgible_pdfs.append(pdf)
+        
+    pdf_list = sorted_pdf_list
     time = dt.date.today()
     file_name = QFileDialog.getSaveFileName(None,'Save merged PDF file', str(time) + '_merged.pdf','PDF Files (*pdf)')[0]
     if file_name.split('.')[-1] != 'pdf':
         file_name = file_name + '.pdf'
     print(elgible_pdfs)
     merge_pdfs(elgible_pdfs,file_name)
+    
+def searchPDFByName(pdfName):
+    for pdf in pdf_list:
+        name = pdf.stream.name.split('/')[-1]
+        if name == pdfName:
+            return pdf
     
 def newActionHandler():
     #clear the pdf widget list
