@@ -9,6 +9,7 @@ import datetime as dt
 import sys
 import count_gui as count_gui
 import tree as tree
+import regularexpr as reg
 
 # Operations 
 def open_pdf(path: str):
@@ -83,25 +84,29 @@ def onItemClicked(it, col):
     if len(selectedItems) == 0:
         disableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
+        disableRemoveComponents()
         disableComponent(ui.actionUnselect_all)
         disableComponent(ui.mergeButton)
     elif len(selectedItems) == 1:
         enableComponent(ui.deleteButton)
         enableCountElements() #we can count elements here so we enable count elements
+        enableRemoveComponents()
         enableComponent(ui.actionUnselect_all)
         disableComponent(ui.mergeButton)
     else:
         enableComponent(ui.deleteButton)
         disableCountElements() #we cant count elements here so we disable count elements
+        disableRemoveComponents()
         enableComponent(ui.actionUnselect_all)
         enableComponent(ui.mergeButton)
     # Comparison to manage menu bar options enabling
-    selectedItems.sort()
-    items_list.sort()
+    #selectedItems.sort()
+    #items_list.sort()
     if selectedItems == items_list:
         disableComponent(ui.actionSelect_all)
     else:
         enableComponent(ui.actionSelect_all)
+    reorderPdfList()
     
 #before we had: for item in selectedItems: This is incorrect because we cant remove element while we are iterating. 
 #Because there are elements that we couldn't reach. Instead, create a copy of the list in order to iterate on a copy
@@ -120,6 +125,7 @@ def deleteButtonHandler():
         items_list.remove(item)
     disableComponent(ui.deleteButton)
     disableCountElements()
+    disableRemoveComponents()
     disableComponent(ui.actionUnselect_all)
     disableComponent(ui.mergeButton)
     reassignIds()
@@ -180,26 +186,50 @@ def countButtonHandler():
     app.restoreOverrideCursor()
     resultCount.show()
     
-def parseInterval():
-    interval_input = ui.pagesRemLabel.text()
-    sections = interval_input.split(',')
-    for sec in sections:
-        sub_section = sec.split('-')
+#method to substract by one every element of the input list (in order to get the indexes pages of the PDF)
+def substractOne(list):
+    for i in range(len(list)):
+        list[i] = list[i]-1
+    return list
 
+#method to reoirder the pdf_list every time there is a TreeWidget event
+def reorderPdfList():
+    global pdf_list
+    listWidget = ui.pdfTreeWidget
+    sorted_pdf_list = []
+    for i in range(listWidget.topLevelItemCount()):
+        pdfName = listWidget.topLevelItem(i).text(1)
+        pdf = searchPDFByName(pdfName)
+        sorted_pdf_list.append(pdf)
+        
+    pdf_list = sorted_pdf_list
+    
+def removeButtonHandler():
+    selectedPdf = selectedItems[0]
+    index = int(selectedPdf.text(0))-1
+    interval_input = ui.remLineEdit.text()
+    print(interval_input)
+    interval_list = reg.parsePDFsInput(interval_input)
+    time = dt.date.today()
+    file_name = QFileDialog.getSaveFileName(None,'Save removed PDF file', str(time) + '_removed.pdf','PDF Files (*pdf)')[0]
+    if file_name.split('.')[-1] != 'pdf':
+        file_name = file_name + '.pdf'
+    indexes_interval = substractOne(interval_list)
+    print(pdf_list[index],indexes_interval)
+    remove_pages_pdf(pdf_list[index],indexes_interval)
+    
+
+    
 def mergeButtonHandler():
     global pdf_list
     elgible_pdfs = []
     listWidget = ui.pdfTreeWidget
-    sorted_pdf_list = []
     i = 0
     for i in range(len(selectedItems)):
-        pdfName = listWidget.topLevelItem(i).text(1)
-        pdf = searchPDFByName(pdfName)
-        sorted_pdf_list.append(pdf)
         if listWidget.topLevelItem(i).checkState(2):
-            elgible_pdfs.append(pdf)
+            pdfIndex = int(listWidget.topLevelItem(i).text(0)) - 1
+            elgible_pdfs.append(pdf_list[pdfIndex])
         
-    pdf_list = sorted_pdf_list
     time = dt.date.today()
     file_name = QFileDialog.getSaveFileName(None,'Save merged PDF file', str(time) + '_merged.pdf','PDF Files (*pdf)')[0]
     if file_name.split('.')[-1] != 'pdf':
@@ -252,6 +282,14 @@ def disableCountElements():
     disableComponent(ui.linesCheckBox)
     disableComponent(ui.pagesCheckBox)
     
+def enableRemoveComponents():
+    enableComponent(ui.remLineEdit)
+    enableComponent(ui.removeButton)
+
+def disableRemoveComponents():
+    disableComponent(ui.remLineEdit)
+    disableComponent(ui.removeButton)
+    
 def setCountCheckState(state: bool):
     ui.charsCheckBox.setChecked(state)
     ui.wordsCheckBox.setChecked(state)
@@ -266,9 +304,11 @@ def selectAllPdfs():
     if len(selectedItems) == 1:
         disableComponent(ui.mergeButton)
         enableCountElements() #we can count elements here so we enable count elements
+        enableRemoveComponents()
     else:
         enableComponent(ui.mergeButton)
         disableCountElements() #we cant count elements here so we disable count elements
+        disableRemoveComponents()
     enableComponent(ui.deleteButton)
     disableComponent(ui.actionSelect_all)
     enableComponent(ui.actionUnselect_all)
@@ -280,6 +320,7 @@ def unselectAllPdfs():
     selectedItems.clear()
     disableComponent(ui.deleteButton)
     disableCountElements() #we cant count elements here so we disable count elements
+    disableRemoveComponents()
     disableComponent(ui.actionUnselect_all)
     enableComponent(ui.actionSelect_all)
     disableComponent(ui.mergeButton)
@@ -294,6 +335,7 @@ def initGuiElements():
     disableComponent(ui.actionUnselect_all)
     disableComponent(ui.actionUndo)
     disableCountElements()
+    disableRemoveComponents()
     setCountCheckState(False)
     """ui.charsCheckBox.setChecked(False)
     ui.wordsCheckBox.setChecked(False)
@@ -315,6 +357,7 @@ def initGuiHandlers():
     ui.wordsCheckBox.clicked.connect(checkBoxCountHandler)
     ui.linesCheckBox.clicked.connect(checkBoxCountHandler)
     ui.pagesCheckBox.clicked.connect(checkBoxCountHandler)
+    ui.removeButton.clicked.connect(removeButtonHandler)
     # Menu bar
     ui.exitAction.triggered.connect(MainWindow.close)
     ui.actionSelect_all.triggered.connect(selectAllPdfs)
